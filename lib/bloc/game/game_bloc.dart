@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math' show Random;
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart' show Alignment;
 
+import '../../models/enums.dart' show TargetColor;
 import '../../models/target.dart';
 import 'game_state.dart';
 
@@ -66,7 +66,7 @@ class GameBloc extends Cubit<GameState> {
         number: i + 1,
         color: TargetColor.values[i],
         textColor: textColors[i],
-        alignment: Alignment(
+        position: Position(
           rng.nextDouble() * 2 - 1,
           rng.nextDouble() * 2 - 1,
         ),

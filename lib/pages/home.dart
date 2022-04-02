@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/game/game.dart';
-import '../models/target.dart';
+import '../models/enums.dart' show TargetColorX;
 import '../widgets/prompt.dart';
 import '../widgets/target_display.dart';
 
@@ -80,7 +80,10 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           for (final target in state.targets) AnimatedAlign(
                             duration: const Duration(milliseconds: 250),
-                            alignment: target.alignment,
+                            alignment: Alignment(
+                              target.position.x,
+                              target.position.y,
+                            ),
                             child: GestureDetector(
                               onTapDown: (_) => state.isRunning
                                   ? context.read<GameBloc>().targetTapped(target)
@@ -89,10 +92,10 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           if (!state.isRunning) Align(
-                            alignment: Alignment.center,
-                            child: OutlinedButton(
+                            alignment: const Alignment(0, -0.2),
+                            child: ElevatedButton(
                               onPressed: context.read<GameBloc>().startGame,
-                              child: const Text("Start", style: TextStyle(fontSize: 24)),
+                              child: const Text("Start", style: TextStyle(fontSize: 32)),
                             ),
                           ),
                         ],

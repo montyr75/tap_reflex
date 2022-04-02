@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/enums.dart' show TargetColorX;
 import '../models/target.dart';
 
 class TargetDisplay extends StatelessWidget {

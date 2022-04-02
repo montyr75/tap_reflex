@@ -20,16 +20,10 @@ class Prompt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text("Target: ", style: baseStyle),
-        AnimatedDefaultTextStyle(
-          duration: const Duration(milliseconds: 250),
-          style: baseStyle.copyWith(color: color),
-          child: Text(text),
-        ),
-      ],
+    return AnimatedDefaultTextStyle(
+      duration: const Duration(milliseconds: 250),
+      style: baseStyle.copyWith(color: color),
+      child: Text("Target: $text"),
     );
   }
 }

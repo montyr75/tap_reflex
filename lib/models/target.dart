@@ -1,29 +1,29 @@
-import 'package:flutter/material.dart' show Color, Colors, Alignment;
+import 'enums.dart' show TargetColor;
 
 class Target {
   final int number;
   final TargetColor color;
   final TargetColor textColor;
-  final Alignment alignment;
+  final Position position;
 
   const Target({
     required this.number,
     required this.color,
     required this.textColor,
-    this.alignment = const Alignment(0, 0),
+    this.position = const Position(0, 0),
   });
 
   Target copyWith({
     int? number,
     TargetColor? color,
     TargetColor? textColor,
-    Alignment? alignment,
+    Position? position,
   }) {
     return Target(
       number: number ?? this.number,
       color: color ?? this.color,
       textColor: textColor ?? this.textColor,
-      alignment: alignment ?? this.alignment,
+      position: position ?? this.position,
     );
   }
 }
@@ -44,22 +44,11 @@ class CorrectTarget {
       : target.color;
 }
 
-enum TargetColor {
-  orange,
-  green,
-  yellow,
-  blue,
-}
+class Position {
+  final double x;
+  final double y;
 
-extension TargetColorX on TargetColor {
-  Color toColor() {
-    switch (this) {
-      case TargetColor.orange: return Colors.orange;
-      case TargetColor.green: return Colors.green;
-      case TargetColor.yellow: return Colors.yellow;
-      case TargetColor.blue: return Colors.blue;
-    }
-  }
+  const Position(this.x, this.y);
 }
 
 enum CorrectTargetType {
