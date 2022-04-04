@@ -26,85 +26,83 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: BlocBuilder<GameBloc, GameState>(
-                        buildWhen: (previous, current) => previous.timeRemaining != current.timeRemaining,
-                        builder: (context, state) {
-                          return state.isRunning ? Text(
-                            "Time: ${state.timeRemaining}",
-                            style: const TextStyle(fontSize: 24),
-                          ) : const SizedBox.shrink();
-                        },
-                      ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: BlocBuilder<GameBloc, GameState>(
+                      buildWhen: (previous, current) => previous.timeRemaining != current.timeRemaining,
+                      builder: (context, state) {
+                        return state.isRunning ? Text(
+                          "Time: ${state.timeRemaining}",
+                          style: const TextStyle(fontSize: 24),
+                        ) : const SizedBox.shrink();
+                      },
                     ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: BlocBuilder<GameBloc, GameState>(
-                        buildWhen: (previous, current) => previous.correctTarget != current.correctTarget,
-                        builder: (context, state) {
-                          return state.isRunning ? Prompt(
-                            text: state.correctTarget.toString(),
-                            color: state.correctTarget!.color.toColor(),
-                          ) : const SizedBox.shrink();
-                        },
-                      ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: BlocBuilder<GameBloc, GameState>(
+                      buildWhen: (previous, current) => previous.correctTarget != current.correctTarget,
+                      builder: (context, state) {
+                        return state.isRunning ? Prompt(
+                          text: state.correctTarget.toString(),
+                          color: state.correctTarget!.color.toColor(),
+                        ) : const SizedBox.shrink();
+                      },
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: BlocBuilder<GameBloc, GameState>(
-                        buildWhen: (previous, current) => previous.score != current.score,
-                        builder: (context, state) {
-                          return Text(
-                            "Score: ${state.score}",
-                            style: const TextStyle(fontSize: 24),
-                          );
-                        },
-                      ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: BlocBuilder<GameBloc, GameState>(
+                      buildWhen: (previous, current) => previous.score != current.score,
+                      builder: (context, state) {
+                        return Text(
+                          "Score: ${state.score}",
+                          style: const TextStyle(fontSize: 24),
+                        );
+                      },
                     ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                BlocBuilder<GameBloc, GameState>(
-                  buildWhen: (previous, current) => previous.targets != current.targets
-                      || previous.isRunning != current.isRunning,
-                  builder: (context, state) {
-                    return Expanded(
-                      child: Stack(
-                        children: [
-                          for (final target in state.targets) AnimatedAlign(
-                            duration: const Duration(milliseconds: 250),
-                            alignment: Alignment(
-                              target.position.x,
-                              target.position.y,
-                            ),
-                            child: GestureDetector(
-                              onTapDown: (_) => state.isRunning
-                                  ? context.read<GameBloc>().targetTapped(target)
-                                  : null,
-                              child: TargetDisplay(target: target),
-                            ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              BlocBuilder<GameBloc, GameState>(
+                buildWhen: (previous, current) => previous.targets != current.targets
+                    || previous.isRunning != current.isRunning,
+                builder: (context, state) {
+                  return Expanded(
+                    child: Stack(
+                      children: [
+                        for (final target in state.targets) AnimatedAlign(
+                          duration: const Duration(milliseconds: 250),
+                          alignment: Alignment(
+                            target.position.x,
+                            target.position.y,
                           ),
-                          if (!state.isRunning) Align(
-                            alignment: const Alignment(0, -0.2),
-                            child: ElevatedButton(
-                              onPressed: context.read<GameBloc>().startGame,
-                              child: const Text("Start", style: TextStyle(fontSize: 32)),
-                            ),
+                          child: GestureDetector(
+                            onTapDown: (_) => state.isRunning
+                                ? context.read<GameBloc>().targetTapped(target)
+                                : null,
+                            child: TargetDisplay(target: target),
                           ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
+                        ),
+                        if (!state.isRunning) Align(
+                          alignment: const Alignment(0, -0.2),
+                          child: ElevatedButton(
+                            onPressed: context.read<GameBloc>().startGame,
+                            child: const Text("Start", style: TextStyle(fontSize: 32)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ),
